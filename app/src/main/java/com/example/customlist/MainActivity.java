@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ItemsDataAdapter(this, null);
         listView.setAdapter(adapter);
 
-        
+
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override

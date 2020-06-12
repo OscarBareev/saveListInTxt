@@ -21,21 +21,12 @@ public class ItemsDataAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
 
-      /*  private CompoundButton.OnCheckedChangeListener myCheckChangeList
-            = new CompoundButton.OnCheckedChangeListener() {
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            items.get((Integer) buttonView.getTag()).setChecked(isChecked);
-        }
-    };*/
-
-
-    View.OnClickListener myButtonClickListener = new View.OnClickListener() {
+    private View.OnClickListener myButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             removeItem((Integer) v.getTag());
         }
     };
-
 
 
     ItemsDataAdapter(Context context, List<ItemData> items) {
@@ -48,13 +39,13 @@ public class ItemsDataAdapter extends BaseAdapter {
     }
 
 
-    void addItem(ItemData item) {
+    public void addItem(ItemData item) {
         this.items.add(item);
         notifyDataSetChanged();
     }
 
 
-    void removeItem(int position) {
+    public void removeItem(int position) {
         items.remove(position);
         notifyDataSetChanged();
     }
@@ -102,13 +93,6 @@ public class ItemsDataAdapter extends BaseAdapter {
 
         delBtn.setOnClickListener(myButtonClickListener);
         delBtn.setTag(position);
-
-
-
-        /*checkBox.setOnCheckedChangeListener(myCheckChangeList);
-        checkBox.setTag(position);
-        checkBox.setChecked(itemData.isChecked());*/
-
         return view;
     }
 }
