@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -52,20 +53,12 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ItemsDataAdapter(this, null);
         listView.setAdapter(adapter);
 
-        // При тапе по элементу списка будем показывать его данные
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                showItemData(position);
-            }
-        });
-
+        
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                adapter.removeItem(position);
+                showItemData(position);
                 return true;
             }
         });
@@ -81,12 +74,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
     private void generateRandomItemData() {
         adapter.addItem(new ItemData(
                 images.get(random.nextInt(images.size())),
                 "Hello" + adapter.getCount(),
-                "It\'s me",
-                random.nextBoolean()));
+                "It\'s me"));
     }
 
 
@@ -94,8 +88,7 @@ public class MainActivity extends AppCompatActivity {
         ItemData itemData = adapter.getItem(position);
         Toast.makeText(MainActivity.this,
                 "Title: " + itemData.getTitle() + "\n" +
-                        "Subtitle: " + itemData.getSubtitle() + "\n" +
-                        "Checked: " + itemData.isChecked(),
+                        "Subtitle: " + itemData.getSubtitle(),
                 Toast.LENGTH_SHORT).show();
     }
 
