@@ -90,6 +90,24 @@ public class MainActivity extends AppCompatActivity {
 
     private void prepareContent() {
         dataFile = new File(getApplicationContext().getExternalFilesDir(null), "data.txt");
+
+
+        //Тут надо что-то придумать
+
+        try {
+            dataWriter = new FileWriter(dataFile, true);
+            dataWriter.append(" ");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                dataWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
         try {
             dataReader = new FileReader(dataFile);
             Scanner scanner = new Scanner(dataReader);
