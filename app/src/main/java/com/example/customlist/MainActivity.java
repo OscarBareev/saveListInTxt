@@ -27,7 +27,6 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private Random random = new Random();
 
     private ItemsDataAdapter adapter;
@@ -91,29 +90,13 @@ public class MainActivity extends AppCompatActivity {
     private void prepareContent() {
         dataFile = new File(getApplicationContext().getExternalFilesDir(null), "data.txt");
 
-
-        //Тут надо что-то придумать
-
-        try {
-            dataWriter = new FileWriter(dataFile, true);
-            dataWriter.append(" ");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                dataWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-
         try {
             dataReader = new FileReader(dataFile);
             Scanner scanner = new Scanner(dataReader);
-            String longLine = scanner.nextLine();
-            if (!longLine.trim().equals("")) {
-                String[] strings = longLine.split(";");
+
+            if (scanner.hasNext()) {
+                String longLine = scanner.nextLine();
+                String[] strings = longLine.trim().split(";");
 
                 startItemList = new ArrayList<>();
 
@@ -125,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 startItemList = null;
             }
+
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } finally {
