@@ -92,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (dataFile.exists() && dataFile.isFile()) {
 
-
             try (FileReader dataReader = new FileReader(dataFile)) {
+
                 Scanner scanner = new Scanner(dataReader);
 
                 if (scanner.hasNext()) {
@@ -107,9 +107,7 @@ public class MainActivity extends AppCompatActivity {
                                 string,
                                 "It\'s me"));
                     }
-
                 }
-
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
