@@ -55,21 +55,25 @@ public class ItemsDataAdapter extends BaseAdapter {
         items.remove(position);
 
 
-
-        FileWriter dataWriter = null;
+        //FileWriter dataWriter = null;
 
         File dataFile = new File(context.getExternalFilesDir(null), "data.txt");
         dataFile.delete();
 
-        try {
+        try (FileWriter dataWriter = new FileWriter(dataFile, true)) {
+            for (ItemData item : items) {
+                dataWriter.append(item.getTitle() + ";");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+   /*     try {
             dataWriter = new FileWriter(dataFile, true);
 
             for (ItemData item : items) {
                 dataWriter.append(item.getTitle() + ";");
             }
-
-
-
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -78,11 +82,7 @@ public class ItemsDataAdapter extends BaseAdapter {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-
-
-
-
+        }*/
 
 
         notifyDataSetChanged();

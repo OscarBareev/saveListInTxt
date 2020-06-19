@@ -34,13 +34,13 @@ public class MainActivity extends AppCompatActivity {
     private List<Drawable> images = new ArrayList<>();
 
 
-    FileWriter dataWriter = null;
+    //FileWriter dataWriter = null;
 
-    FileReader dataReader = null;
+    // FileReader dataReader = null;
 
     File dataFile;
 
-    List<ItemData> startItemList;
+    List<ItemData> startItemList = null;
 
 
     @Override
@@ -90,35 +90,58 @@ public class MainActivity extends AppCompatActivity {
     private void prepareContent() {
         dataFile = new File(getApplicationContext().getExternalFilesDir(null), "data.txt");
 
-        try {
-            dataReader = new FileReader(dataFile);
-            Scanner scanner = new Scanner(dataReader);
+        if (dataFile.exists() && dataFile.isFile()) {
 
-            if (scanner.hasNext()) {
-                String longLine = scanner.nextLine();
-                String[] strings = longLine.trim().split(";");
 
-                startItemList = new ArrayList<>();
+            try (FileReader dataReader = new FileReader(dataFile)) {
+                Scanner scanner = new Scanner(dataReader);
 
-                for (String string : strings) {
-                    startItemList.add(new ItemData(images.get(random.nextInt(images.size())),
-                            string,
-                            "It\'s me"));
+                if (scanner.hasNext()) {
+                    String longLine = scanner.nextLine();
+                    String[] strings = longLine.trim().split(";");
+
+                    startItemList = new ArrayList<>();
+
+                    for (String string : strings) {
+                        startItemList.add(new ItemData(images.get(random.nextInt(images.size())),
+                                string,
+                                "It\'s me"));
+                    }
+
                 }
-            } else {
-                startItemList = null;
-            }
 
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                dataReader.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+
+        /*    try {
+                dataReader = new FileReader(dataFile);
+                Scanner scanner = new Scanner(dataReader);
+                if (scanner.hasNext()) {
+                    String longLine = scanner.nextLine();
+                    String[] strings = longLine.trim().split(";");
+                    startItemList = new ArrayList<>();
+
+                    for (String string : strings) {
+                        startItemList.add(new ItemData(images.get(random.nextInt(images.size())),
+                                string,
+                                "It\'s me"));
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    dataReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }*/
     }
 
 
@@ -138,7 +161,14 @@ public class MainActivity extends AppCompatActivity {
                 "It\'s me");
 
         dataFile = new File(getApplicationContext().getExternalFilesDir(null), "data.txt");
-        try {
+
+        try (FileWriter dataWriter = new FileWriter(dataFile, true)) {
+            dataWriter.append(newItem.getTitle() + ";");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+      /*  try {
             dataWriter = new FileWriter(dataFile, true);
             dataWriter.append(newItem.getTitle() + ";");
         } catch (IOException e) {
@@ -149,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
         adapter.addItem(newItem);
     }
 
